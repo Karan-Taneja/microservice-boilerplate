@@ -17,13 +17,13 @@ jobs:
         with:
           node-version: '12.x'
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
       - name: Build the project
-        run: npm run build
+        run: pnpm run build
       - name: Run linter
-        run: npm run lint
+        run: pnpm run lint
       - name: Run unit tests
-        run: npm run test
+        run: pnpm run test
       - name: Build the Docker image
         run: docker build -t microservice-boilerplate .
       - name: Run the Docker image
@@ -31,6 +31,6 @@ jobs:
         env:
           JWT_SECRET: SECRET_PASSWORD
       - name: Run end-to-end tests
-        run: npm run test:e2e
+        run: pnpm run test:e2e
         env:
           APP_URL: http://localhost:3000
