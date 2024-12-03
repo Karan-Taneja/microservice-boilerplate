@@ -5,16 +5,16 @@ COPY package*.json ./
 FROM base AS development
 LABEL stage=intermediate
 ENV NODE_ENV=development
-RUN npm install
+RUN pnpm install
 COPY . .
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "run", "dev"]
 
 FROM development AS builder
-RUN npm run build
+RUN pnpm run build
 
 FROM base AS production
 ENV NODE_ENV=production
-RUN npm ci --production
+RUN pnpm install --frozen-lockfile
 COPY --from=builder /usr/src/app/src/docs ./src/docs
 COPY --from=builder /usr/src/app/dist ./src
 CMD ["node", "src/server.js"]

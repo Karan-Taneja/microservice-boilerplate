@@ -1,9 +1,10 @@
-import { getMockReq, getMockRes } from '@jest-mock/express';
+import { createRequest, createResponse } from 'node-mocks-http';
+
 import AuthMiddleware from './AuthMiddleware';
 
 jest.mock('../../services/AuthService');
 
-const { res } = getMockRes();
+const res  = createResponse();
 const authMiddleware = new AuthMiddleware();
 const mockFn: jest.Mock = jest.fn();
 
@@ -13,7 +14,7 @@ describe('AuthMiddleware', (): void => {
   });
 
   test('invokes a callback function when Authorization header is valid', async (): Promise<void> => {
-    const req = getMockReq();
+    const req = createRequest();
     req.headers.authorization = 'Bearer some-credentials-here';
     await authMiddleware.authorize(req, res, mockFn);
 
@@ -21,7 +22,7 @@ describe('AuthMiddleware', (): void => {
   });
 
   test('throws an error when Authorization header is not present', async (): Promise<void> => {
-    const req = getMockReq();
+    const req = createRequest();
 
     await expect(
       authMiddleware.authorize(req, res, mockFn)
@@ -29,7 +30,7 @@ describe('AuthMiddleware', (): void => {
   });
 
   test('throws an error when Authorization header is not well formatted', async (): Promise<void> => {
-    const req = getMockReq();
+    const req = createRequest();
     req.headers.authorization = 'Bearer';
 
     await expect(

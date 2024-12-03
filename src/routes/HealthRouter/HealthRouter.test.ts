@@ -5,7 +5,7 @@ import app from '../../app';
 jest.mock('../../controllers/HealthController', () =>
   jest.fn().mockImplementationOnce(() => ({
     getHealthInfo: (req: Request, res: Response) => res.send('OK'),
-  }))
+  })),
 );
 
 const appTest = supertest(app);

@@ -1,9 +1,10 @@
-import { getMockReq, getMockRes } from '@jest-mock/express';
+import { createRequest, createResponse } from 'node-mocks-http';
+
 import ValidatorMiddleware from './ValidatorMiddleware';
 import loginSchema from '../../schemas/login';
 
-const req = getMockReq();
-const { res } = getMockRes();
+const req = createRequest();
+const res = createResponse();
 
 describe('ValidatorMiddleware', (): void => {
   const validatorMiddleware = new ValidatorMiddleware();
