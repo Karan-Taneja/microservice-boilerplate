@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Schema } from '@hapi/joi';
+import { Schema } from 'joi';
 import BadRequestError from '../../errors/BadRequestError';
 
 type Middleware = (req: Request, res: Response, next: NextFunction) => void;

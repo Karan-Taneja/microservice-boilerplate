@@ -1,8 +1,11 @@
-import { getMockReq, getMockRes } from '@jest-mock/express';
+import { createRequest, createResponse } from 'node-mocks-http';
+
 import ErrorHandlerMiddleware from './ErrorHandlerMiddleware';
 
-const req = getMockReq();
-const { res } = getMockRes();
+const req = createRequest();
+const res = createResponse();
+res.status = jest.fn();
+res.json = jest.fn();
 const mockFn: jest.Mock = jest.fn();
 
 describe('ErrorHandlerMiddleware', (): void => {

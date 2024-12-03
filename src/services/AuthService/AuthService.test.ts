@@ -1,4 +1,3 @@
-import { mocked } from 'ts-jest/utils';
 import UnauthorizedError from '../../errors/UnauthorizedError';
 import UserService from '../UserService';
 import AuthService from './AuthService';
@@ -10,7 +9,7 @@ jest.mock('jsonwebtoken', () => ({
 }));
 
 const mockUser = { username: 'john.doe', name: 'John Doe' };
-const mockedService = mocked(UserService, true);
+const mockedService = jest.mocked(UserService, { shallow: true });
 
 describe('AuthService', (): void => {
   test('returns a login result when credentials are valid', async () => {

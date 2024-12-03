@@ -1,5 +1,5 @@
-import { getMockReq, getMockRes } from '@jest-mock/express';
-import { mocked } from 'ts-jest/utils';
+import { createRequest, createResponse } from 'node-mocks-http';
+
 import UnauthorizedError from '../../errors/UnauthorizedError';
 import AuthService from '../../services/AuthService';
 import AuthController from './AuthController';
@@ -7,9 +7,11 @@ import AuthController from './AuthController';
 jest.mock('../../services/AuthService');
 
 const mockLoginResult = { username: 'john.doe', password: '1234' };
-const req = getMockReq();
-const { res } = getMockRes();
-const mockedService = mocked(AuthService, true);
+const req = createRequest();
+const res = createResponse();
+res.status = jest.fn();
+res.json = jest.fn();
+const mockedService = jest.mocked(AuthService, { shallow: true });
 
 describe('AuthController', (): void => {
   afterEach((): void => {

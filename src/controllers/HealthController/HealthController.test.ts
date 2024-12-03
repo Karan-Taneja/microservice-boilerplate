@@ -1,14 +1,16 @@
-import { getMockReq, getMockRes } from '@jest-mock/express';
-import { mocked } from 'ts-jest/utils';
+import { createRequest, createResponse } from 'node-mocks-http';
+
 import HealthController from './HealthController';
 import HealthService from '../../services/HealthService';
 
 jest.mock('../../services/HealthService');
 
 const mockHealthInfo = { service: 'Microservice' };
-const req = getMockReq();
-const { res } = getMockRes();
-const mockedService = mocked(HealthService, true);
+const req = createRequest();
+const res = createResponse();
+res.status = jest.fn();
+res.json = jest.fn();
+const mockedService = jest.mocked(HealthService, { shallow: true });
 
 describe('Test HealthController', (): void => {
   afterEach((): void => {
